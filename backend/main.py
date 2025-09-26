@@ -33,22 +33,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-frontend_static_path = os.path.join(os.path.dirname(__file__), "../frontend/static")
-
-if not os.path.exists(frontend_static_path):
-    raise RuntimeError(f"Directory '{frontend_static_path}' does not exist")
-
-app.mount("/static", StaticFiles(directory=frontend_static_path), name="static")
+# Serve static files from frontend/static
+app.mount("/static", StaticFiles(directory=os.path.join("..", "frontend", "static")), name="static")
 
 # Serve index.html
 @app.get("/", include_in_schema=False)
 def serve_index():
-    index_path = os.path.join("/frontend/templates", "index.html")
+    index_path = os.path.join("..", "frontend", "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
-    return {"error": "index.html not found"}
-    return templates.TemplateResponse("index.html", {"request": request})
+    else:
+        return {"error": "index.html not found"}
 
 # -------------------------------
 # Helper to load dataset
