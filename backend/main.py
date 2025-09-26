@@ -13,10 +13,10 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
 
 # Import your modules
-from rule_based import apply_rules
-from optimization import optimize_trains
-from predictive import apply_predictive
-from whatif import what_if
+from .rule_based import apply_rules
+from .optimization import optimize_trains
+from .predictive import apply_predictive
+from .whatif import what_if
 
 # -------------------------------
 # FastAPI app
