@@ -33,19 +33,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# -------------------------------
-# Serve frontend static files
-# -------------------------------
+# Serve static files (CSS/JS)
 app.mount("/static", StaticFiles(directory="../frontend/static"), name="static")
 
-# -------------------------------
-# Templates
-# -------------------------------
-templates = Jinja2Templates(directory="../frontend/templates")
-
+# Serve index.html
 @app.get("/", include_in_schema=False)
-def serve_index(request: Request):
-    """Serve dashboard HTML"""
+def serve_index():
+    index_path = os.path.join("../frontend/templates", "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return {"error": "index.html not found"}
     return templates.TemplateResponse("index.html", {"request": request})
 
 # -------------------------------
