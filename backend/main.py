@@ -33,8 +33,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files (CSS/JS)
-app.mount("/static", StaticFiles(directory="/frontend/static"), name="static")
+
+frontend_static_path = os.path.join(os.path.dirname(__file__), "../frontend/static")
+
+if not os.path.exists(frontend_static_path):
+    raise RuntimeError(f"Directory '{frontend_static_path}' does not exist")
+
+app.mount("/static", StaticFiles(directory=frontend_static_path), name="static")
 
 # Serve index.html
 @app.get("/", include_in_schema=False)
