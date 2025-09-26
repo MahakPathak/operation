@@ -34,12 +34,12 @@ app.add_middleware(
 )
 
 # Serve static files (CSS/JS)
-app.mount("/static", StaticFiles(directory="../frontend/static"), name="static")
+app.mount("/static", StaticFiles(directory="/frontend/static"), name="static")
 
 # Serve index.html
 @app.get("/", include_in_schema=False)
 def serve_index():
-    index_path = os.path.join("../frontend/templates", "index.html")
+    index_path = os.path.join("/frontend/templates", "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
     return {"error": "index.html not found"}
