@@ -13,9 +13,25 @@ import matplotlib
 matplotlib.use("Agg")  # Non-GUI backend
 import matplotlib.pyplot as plt
 from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
 
-# Create FastAPI app
+# -------------------------------
+# Create FastAPI app first
+# -------------------------------
 app = FastAPI()
+
+# -------------------------------
+# Serve frontend static files
+# -------------------------------
+app.mount("/static", StaticFiles(directory="../frontend"), name="static")
+
+@app.get("/")
+def serve_index():
+    index_path = os.path.join("../frontend", "index.html")
+    return FileResponse(index_path)
+
 
 # Enable CORS for frontend access
 app.add_middleware(
