@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.templating import Jinja2Templates
 import os
 import pandas as pd
 import matplotlib
@@ -18,12 +19,12 @@ from predictive import apply_predictive
 from whatif import what_if
 
 # -------------------------------
-# Create FastAPI app
+# FastAPI app
 # -------------------------------
 app = FastAPI()
 
 # -------------------------------
-# Enable CORS for frontend JS
+# Enable CORS
 # -------------------------------
 app.add_middleware(
     CORSMiddleware,
@@ -35,12 +36,17 @@ app.add_middleware(
 # -------------------------------
 # Serve frontend static files
 # -------------------------------
-app.mount("/static", StaticFiles(directory="../frontend"), name="static")
+app.mount("/static", StaticFiles(directory="../frontend/static"), name="static")
+
+# -------------------------------
+# Templates
+# -------------------------------
+templates = Jinja2Templates(directory="../frontend/templates")
 
 @app.get("/", include_in_schema=False)
-def serve_index():
+def serve_index(request: Request):
     """Serve dashboard HTML"""
-    return FileResponse(os.path.join("../frontend", "index.html"))
+    return templates.TemplateResponse("index.html", {"request": request})
 
 # -------------------------------
 # Helper to load dataset

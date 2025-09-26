@@ -1,15 +1,18 @@
-const LOCAL_API_PORT = 8000;
+// -------------------------------
+// Base API URL (relative, works for both local and deployed)
+// -------------------------------
+const BASE = "/api";
 
-const BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
-  ? `http://127.0.0.1:${LOCAL_API_PORT}/api`
-  : "https://your-app-name.onrender.com/api";
-
-
+// -------------------------------
+// Helper to create badges
+// -------------------------------
 function badge(text, color) {
   return `<span class="badge ${color}">${text}</span>`;
 }
 
-// ---------- RULES ----------
+// -------------------------------
+// RULES
+// -------------------------------
 async function loadRules() {
   const res = await fetch(`${BASE}/rules`);
   const data = await res.json();
@@ -30,7 +33,9 @@ async function loadRules() {
   container.innerHTML = html;
 }
 
-// ---------- OPTIMIZATION ----------
+// -------------------------------
+// OPTIMIZATION
+// -------------------------------
 async function loadOptimization() {
   const k = document.getElementById("kOpt").value;
   const res = await fetch(`${BASE}/optimization?k=${k}`);
@@ -52,7 +57,9 @@ async function loadOptimization() {
   container.innerHTML = html;
 }
 
-// ---------- PREDICTIVE ----------
+// -------------------------------
+// PREDICTIVE
+// -------------------------------
 async function loadPredictive() {
   const res = await fetch(`${BASE}/predictive`);
   const data = await res.json();
@@ -78,9 +85,9 @@ async function loadPredictive() {
   container.innerHTML = html;
 }
 
-
-
-// ---------- WHAT-IF ----------
+// -------------------------------
+// WHAT-IF SIMULATOR
+// -------------------------------
 async function runWhatIf() {
   const train = document.getElementById("wf_k").value;
   const bw = document.getElementById("wf_brand").value;
@@ -108,7 +115,9 @@ async function runWhatIf() {
   container.innerHTML = html;
 }
 
-// ---------- LOAD ALL ----------
+// -------------------------------
+// LOAD ALL SECTIONS
+// -------------------------------
 async function loadAll() {
   loadRules();
   loadOptimization();
