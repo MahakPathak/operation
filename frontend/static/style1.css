@@ -1,0 +1,198 @@
+/* General body styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease;
+}
+
+/* Header */
+header {
+    background-color: #0077cc;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    transition: transform 0.3s;
+}
+
+header h1:hover {
+    transform: scale(1.05);
+}
+
+header button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: white;
+    color: #0077cc;
+    border: 2px solid #0077cc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+header button:hover {
+    background-color: #0077cc;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Main sections */
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    gap: 20px;
+}
+
+section {
+    background-color: #f9f9f9;
+    border: 2px solid #0077cc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 45%;
+    min-width: 300px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+section h2 {
+    color: #0077cc;
+    margin-top: 0;
+}
+
+/* Inputs and buttons in sections */
+section input {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #0077cc;
+    border-radius: 5px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+section input:focus {
+    border-color: #005fa3;
+    box-shadow: 0 0 5px rgba(0, 95, 163, 0.5);
+    outline: none;
+}
+
+section button {
+    padding: 5px 15px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s, transform 0.2s;
+}
+
+section button:hover {
+    background-color: #005fa3;
+    transform: translateY(-2px);
+}
+
+/* What-If Simulator - stack inputs vertically, labels inline and bold */
+.whatif-field {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.whatif-field label {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 150px; /* Adjust width for alignment */
+}
+
+.whatif-field input {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid #0077cc;
+    border-radius: 5px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.whatif-field input:focus {
+    border-color: #005fa3;
+    box-shadow: 0 0 5px rgba(0, 95, 163, 0.5);
+    outline: none;
+}
+
+#whatif button {
+    display: block;
+    margin-top: 10px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #cce0ff;
+    text-align: center;
+}
+
+th {
+    background-color: #cce0ff;
+    color: #003366;
+}
+
+/* Table rows hover and striped effect */
+tr:nth-child(even) {
+    background-color: #f1f8ff;
+    transition: background-color 0.3s;
+}
+
+tr:hover {
+    background-color: #d0e4ff;
+}
+
+/* Badges */
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.badge.green { background-color: #28a745; }
+.badge.red { background-color: #dc3545; }
+.badge.yellow { background-color: #ffc107; color: #333; }
+
+.badge:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    section {
+        width: 90%;
+    }
+}

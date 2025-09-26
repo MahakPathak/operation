@@ -1,0 +1,26 @@
+id,fitness,job_card_open,branding,mileage,cleaning_due,stabling_pos,route
+Train_01,1,0,Low,63986,0,10,Aluva-Pulinchodu
+Train_02,0,1,Medium,111858,0,7,Pulinchodu-Companypady
+Train_03,1,0,Low,179312,0,9,Companypady-Ambattukavu
+Train_04,0,0,Low,62666,1,7,Ambattukavu-Muttom
+Train_05,1,1,Medium,88660,0,1,Muttom-Kalamssery
+Train_06,1,1,Low,184633,1,1,Kalamssery-Cochin University
+Train_07,1,1,High,76854,1,9,Cochin University-Pathadipalam
+Train_08,1,1,High,114505,0,9,Pathadipalam-Edapally
+Train_09,1,0,High,154488,0,4,Edapally-Changampuzha Park
+Train_10,1,1,Medium,72662,1,9,Changampuzha Park-Palarivattom
+Train_11,1,0,Medium,58392,0,3,Palarivattom-JLN Stadium
+Train_12,0,1,High,80535,0,7,JLN Stadium-Kaloor
+Train_13,1,1,Low,163569,1,6,Kaloor-Town Hall
+Train_14,0,0,Medium,102256,0,8,Town Hall-M.G. Road
+Train_15,1,0,High,139135,0,9,M.G. Road-Maharaja's College
+Train_16,1,1,Medium,177478,0,5,Maharaja's College-Ernakulam South
+Train_17,1,1,High,85222,0,1,Ernakulam South-Kadavanthra
+Train_18,1,1,Low,127373,0,3,Kadavanthra-Elamkulam
+Train_19,1,1,High,173684,0,10,Elamkulam-Vyttila
+Train_20,1,0,Low,60965,0,8,Vyttila-Thaikoodam
+Train_21,1,1,Medium,74538,0,6,Thaikoodam-Petta
+Train_22,1,1,High,158066,0,8,Petta-Vadakkekotta
+Train_23,0,1,High,163252,0,9,Vadakkekotta-SN Junction
+Train_24,1,0,Low,189182,1,4,SN Junction-Thrippunithura
+Train_25,1,1,Medium,148806,0,1,Thrippunithura Depot

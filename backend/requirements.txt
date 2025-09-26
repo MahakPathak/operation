@@ -1,0 +1,11 @@
+fastapi
+pandas
+scikit-learn
+flask
+flask-cors
+joblib
+numpy
+matplotlib
+reportlab
+uvicorn[standard]
+python-multipart
