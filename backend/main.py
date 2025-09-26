@@ -2,10 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import pandas as pd
-from rule_based import apply_rules
-from optimization import optimize_trains
-from predictive import apply_predictive
-from whatif import what_if
+from .rule_based import apply_rules
+from .optimization import optimize_trains
+from .predictive import apply_predictive
+from .whatif import what_if
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).parent.resolve()
 # Load dataset
 # -------------------------------
 def load_df():
-    return pd.read_csv(BASE_DIR / "kochimetro_25_trains.csv")
+    return pd.read_csv("kochimetro_25_trains.csv")
 
 # -------------------------------
 # APIs for ML Models
