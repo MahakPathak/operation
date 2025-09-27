@@ -13,10 +13,10 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
 
 # Import your modules
-from .rule_based import apply_rules
-from .optimization import optimize_trains
-from .predictive import apply_predictive
-from .whatif import what_if
+from rule_based import apply_rules
+from optimization import optimize_trains
+from predictive import apply_predictive
+from whatif import what_if
 
 # -------------------------------
 # FastAPI app
@@ -33,17 +33,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files from frontend/static
-app.mount("/static", StaticFiles(directory=os.path.join("..", "frontend", "static")), name="static")
 
-# Serve index.html
+
+
+# 1. Mount the 'static' folder located in your main project directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# 2. Set up Jinja2 to find HTML files in your 'templates' folder
+templates = Jinja2Templates(directory="templates")
+
+# 3. Serve the index.html file using a TemplateResponse
 @app.get("/", include_in_schema=False)
-def serve_index():
-    index_path = os.path.join("..", "frontend", "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
-    else:
-        return {"error": "index.html not found"}
+def serve_index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 # -------------------------------
 # Helper to load dataset
