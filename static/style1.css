@@ -4,9 +4,7 @@
 /* CSS Variables for Theming */
 :root {
     --font-family: 'Poppins', sans-serif;
-    /* CHANGED: Adjusted to a deep navy-blue shade */
     --primary-color: #084298;
-    /* CHANGED: Updated the hover color accordingly */
     --primary-hover: #073a85;
     --background-color: #f4f7fc;
     --card-bg: #ffffff;
@@ -17,6 +15,9 @@
     --shadow-color: rgba(0, 0, 0, 0.08);
     --table-header-bg: #f2f2f2;
     --table-row-hover: #e9ecef;
+    --color-green: #28a745;
+    --color-red: #dc3545;
+    --color-yellow: #ffc107;
 }
 
 body.dark-mode {
@@ -72,18 +73,17 @@ header h1 i {
 
 /* Main sections as cards */
 main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1.5fr; /* 2 columns, first is wider */
     gap: 25px;
+    padding: 20px;
+    align-items: start;
 }
 
 .card {
     background-color: var(--card-bg);
     border-radius: 15px;
     padding: 25px;
-    width: 45%;
     min-width: 350px;
     box-shadow: 0 6px 20px var(--shadow-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -121,6 +121,13 @@ main {
 }
 
 /* Inputs, Buttons, and Controls */
+/* NEW: Added this rule to fix alignment and spacing */
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 input[type="number"], button {
     padding: 8px 15px;
     border-radius: 8px;
@@ -132,7 +139,7 @@ input[type="number"], button {
 input[type="number"] {
     background-color: var(--background-color);
     color: var(--text-color);
-    margin: 0 5px;
+    margin: 0; /* Margin is now controlled by gap */
 }
 
 input[type="number"]:focus {
@@ -242,9 +249,9 @@ tr:last-child td {
     display: inline-block;
 }
 
-.badge.green { background-color: #28a745; }
-.badge.red { background-color: #dc3545; }
-.badge.yellow { background-color: #ffc107; color: #333; }
+.badge.green { background-color: var(--color-green); }
+.badge.red { background-color: var(--color-red); }
+.badge.yellow { background-color: var(--color-yellow); color: #333; }
 
 /* Loading Spinner */
 .loader {
@@ -275,7 +282,7 @@ tr:last-child td {
     position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
     background-color: white; transition: .4s; border-radius: 50%;
 }
-input:checked + .slider { background-color: #0d8eff; } /* Dark mode toggle remains blue */
+input:checked + .slider { background-color: #0d8eff; }
 input:checked + .slider:before { transform: translateX(24px); }
 
 /* Footer */
@@ -289,7 +296,9 @@ footer {
 
 /* Responsive */
 @media (max-width: 1200px) {
-    .card { width: 90%; }
+    main {
+        grid-template-columns: 1fr; /* Stack to a single column on smaller screens */
+    }
 }
 
 @media (max-width: 768px) {
@@ -298,9 +307,91 @@ footer {
 }
 
 /* Logo Styling */
-/* Logo Styling */
 .header-logo {
-    height: 50px; /* CHANGED: Increased the height to make the logo bigger */
-    margin-right: 50px;
-    vertical-align: middle; /* This is important for alignment */
+    height: 50px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+/* Container for the right column */
+.right-column-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Matches the main grid gap */
+}
+
+/* STATS SECTION STYLES */
+.stats-section {
+    width: 100%;
+}
+
+#stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.stat-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-box-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.stat-box-text .title {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+body.dark-mode .stat-box-text .title {
+    color: #adb5bd;
+}
+
+.stat-box-text .value {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-box-icon {
+    font-size: 2em;
+    color: var(--primary-color);
+    opacity: 0.5;
+}
+
+/* Color coding for stat values and icons */
+.stat-box.eligible .value, .stat-box.eligible .stat-box-icon,
+.stat-box.safe .value, .stat-box.safe .stat-box-icon {
+    color: var(--color-green);
+}
+.stat-box.blocked .value, .stat-box.blocked .stat-box-icon {
+    color: var(--color-red);
+}
+.stat-box.maintenance .value, .stat-box.maintenance .stat-box-icon {
+    color: var(--color-yellow);
+}
+
+/* Chart Container Styling */
+.chart-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }

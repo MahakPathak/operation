@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -32,18 +33,28 @@
       </div>
       <div class="card-body" id="rules"></div>
     </section>
+    
+    <div class="right-column-container">
+        <section class="card">
+          <div class="card-header">
+            <h2><i class="fa-solid fa-cogs"></i> Optimized Induction</h2>
+            <div class="controls">
+              <label for="kOpt">Trains:</label>
+              <input id="kOpt" type="number" value="3" min="1">
+              <button onclick="loadOptimization()">Optimize</button>
+            </div>
+          </div>
+          <div class="card-body" id="opt"></div>
+        </section>
 
-    <section class="card">
-      <div class="card-header">
-        <h2><i class="fa-solid fa-cogs"></i> Optimized Induction</h2>
-        <div class="controls">
-          <label for="kOpt">Trains:</label>
-          <input id="kOpt" type="number" value="3" min="1">
-          <button onclick="loadOptimization()">Optimize</button>
-        </div>
-      </div>
-      <div class="card-body" id="opt"></div>
-    </section>
+        <section class="stats-section">
+            <div id="stats-container">
+                </div>
+            <div class="chart-container">
+                <canvas id="stats-chart"></canvas>
+            </div>
+        </section>
+    </div>
 
     <section class="card">
       <div class="card-header">
