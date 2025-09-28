@@ -1,125 +1,169 @@
 // -------------------------------
-// Base API URL (relative, works for both local and deployed)
+// Base API URL
 // -------------------------------
 const BASE = "/api";
 
 // -------------------------------
-// Helper to create badges
+// UI HELPERS
 // -------------------------------
+function getLoaderHTML() {
+    return `<div class="loader"></div>`;
+}
+
 function badge(text, color) {
-  return `<span class="badge ${color}">${text}</span>`;
+    return `<span class="badge ${color}">${text}</span>`;
 }
 
 // -------------------------------
+// DATA LOADING FUNCTIONS
+// -------------------------------
+
 // RULES
-// -------------------------------
 async function loadRules() {
-  const res = await fetch(`${BASE}/rules`);
-  const data = await res.json();
-  const container = document.getElementById("rules");
-
-  let html = `<table><tr><th>ID</th><th>Status</th><th>Alerts</th></tr>`;
-  data.forEach(row => {
-    const color = row.status === "Eligible" ? "green" : "red";
-    html += `
-      <tr>
-        <td>${row.id}</td>
-        <td>${badge(row.status, color)}</td>
-        <td>${row.alerts || "-"}</td>
-      </tr>`;
-  });
-  html += `</table>`;
-
-  container.innerHTML = html;
+    const container = document.getElementById("rules");
+    container.innerHTML = getLoaderHTML();
+    try {
+        const res = await fetch(`${BASE}/rules`);
+        const data = await res.json();
+        let html = `<table><tr><th>ID</th><th>Status</th><th>Alerts</th></tr>`;
+        data.forEach(row => {
+            const color = row.status === "Eligible" ? "green" : "red";
+            html += `
+              <tr>
+                <td>${row.id}</td>
+                <td>${badge(row.status, color)}</td>
+                <td>${row.alerts || "-"}</td>
+              </tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    } catch (error) {
+        container.innerHTML = `<p class="error">Failed to load rule-based status.</p>`;
+    }
 }
 
-// -------------------------------
 // OPTIMIZATION
-// -------------------------------
 async function loadOptimization() {
-  const k = document.getElementById("kOpt").value;
-  const res = await fetch(`${BASE}/optimization?k=${k}`);
-  const data = await res.json();
-  const container = document.getElementById("opt");
-
-  let html = `<table><tr><th>ID</th><th>Branding</th><th>Mileage</th><th>Score</th></tr>`;
-  data.forEach(row => {
-    html += `
-      <tr>
-        <td>${row.id}</td>
-        <td>${row.branding}</td>
-        <td>${row.mileage}</td>
-        <td>${Math.round(row.score)}</td>
-      </tr>`;
-  });
-  html += `</table>`;
-
-  container.innerHTML = html;
+    const container = document.getElementById("opt");
+    container.innerHTML = getLoaderHTML();
+    const k = document.getElementById("kOpt").value;
+    try {
+        const res = await fetch(`${BASE}/optimization?k=${k}`);
+        const data = await res.json();
+        let html = `<table><tr><th>ID</th><th>Branding</th><th>Mileage</th><th>Score</th></tr>`;
+        data.forEach(row => {
+            html += `
+              <tr>
+                <td>${row.id}</td>
+                <td>${row.branding}</td>
+                <td>${row.mileage}</td>
+                <td>${Math.round(row.score)}</td>
+              </tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    } catch (error) {
+        container.innerHTML = `<p class="error">Failed to load optimization data.</p>`;
+    }
 }
 
-// -------------------------------
 // PREDICTIVE
-// -------------------------------
 async function loadPredictive() {
-  const res = await fetch(`${BASE}/predictive`);
-  const data = await res.json();
-  const container = document.getElementById("pred");
+    const container = document.getElementById("pred");
+    container.innerHTML = getLoaderHTML();
+    try {
+        const res = await fetch(`${BASE}/predictive`);
+        const data = await res.json();
+        let html = `<table><tr><th>ID</th><th>Route</th><th>Mileage</th><th>Predicted Days</th><th>Status</th></tr>`;
+        data.forEach(row => {
+            let color = "green";
+            if (row.status === "Warning") color = "yellow";
+            if (row.status === "Critical") color = "red";
 
-  let html = `<table><tr><th>ID</th><th>Route</th><th>Mileage</th><th>Predicted Days</th><th>Status</th></tr>`;
-  data.forEach(row => {
-    let color = "green";
-    if (row.status === "Warning") color = "yellow";
-    if (row.status === "Critical") color = "red";
-
-    html += `
-      <tr>
-        <td>${row.id}</td>
-        <td>${row.route}</td>
-        <td>${row.mileage}</td>
-        <td>${Math.round(row.predicted_days)}</td>
-        <td>${badge(row.status, color)}</td>
-      </tr>`;
-  });
-  html += `</table>`;
-
-  container.innerHTML = html;
+            html += `
+              <tr>
+                <td>${row.id}</td>
+                <td>${row.route}</td>
+                <td>${row.mileage}</td>
+                <td>${Math.round(row.predicted_days)}</td>
+                <td>${badge(row.status, color)}</td>
+              </tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    } catch (error) {
+        container.innerHTML = `<p class="error">Failed to load predictive maintenance data.</p>`;
+    }
 }
 
-// -------------------------------
 // WHAT-IF SIMULATOR
-// -------------------------------
 async function runWhatIf() {
-  const train = document.getElementById("wf_k").value;
-  const bw = document.getElementById("wf_brand").value;
-  const sw = document.getElementById("wf_stab").value;
-
-  const res = await fetch(
-    `${BASE}/whatif?k=${train}&branding_weight=${bw}&stabling_weight=${sw}`,
-    { method: "POST" }
-  );
-  const data = await res.json();
-  const container = document.getElementById("whatif");
-
-  let html = `<table><tr><th>ID</th><th>Branding</th><th>Mileage</th><th>Score</th></tr>`;
-  data.forEach(row => {
-    html += `
-      <tr>
-        <td>${row.id}</td>
-        <td>${row.branding}</td>
-        <td>${row.mileage}</td>
-        <td>${Math.round(row.score)}</td>
-      </tr>`;
-  });
-  html += `</table>`;
-
-  container.innerHTML = html;
+    const container = document.getElementById("whatif");
+    container.innerHTML = getLoaderHTML();
+    const train = document.getElementById("wf_k").value;
+    const bw = document.getElementById("wf_brand").value;
+    const sw = document.getElementById("wf_stab").value;
+    try {
+        const res = await fetch(
+            `${BASE}/whatif?k=${train}&branding_weight=${bw}&stabling_weight=${sw}`, {
+                method: "POST"
+            }
+        );
+        const data = await res.json();
+        let html = `<table><tr><th>ID</th><th>Branding</th><th>Mileage</th><th>Score</th></tr>`;
+        data.forEach(row => {
+            html += `
+              <tr>
+                <td>${row.id}</td>
+                <td>${row.branding}</td>
+                <td>${row.mileage}</td>
+                <td>${Math.round(row.score)}</td>
+              </tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    } catch (error) {
+        container.innerHTML = `<p class="error">Failed to run what-if simulation.</p>`;
+    }
 }
 
 // -------------------------------
-// LOAD ALL SECTIONS
+// INITIALIZATION
 // -------------------------------
 async function loadAll() {
-  loadRules();
-  loadOptimization();
-  loadPredictive();
+    loadRules();
+    loadOptimization();
+    loadPredictive();
+    // Clear the what-if results on a full refresh
+    document.getElementById("whatif").innerHTML = '';
 }
+
+// Theme Toggle Logic
+function setupThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // Check for saved theme in localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', () => {
+        if (toggle.checked) {
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+}
+
+
+// Load everything when the page is ready
+document.addEventListener('DOMContentLoaded', () => {
+    setupThemeToggle();
+    loadAll();
+});

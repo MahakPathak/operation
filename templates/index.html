@@ -4,56 +4,81 @@
 <head>
   <meta charset="utf-8">
   <title>KMRL Dashboard</title>
-  <!-- Path updated to scripts folder -->
   <link rel="stylesheet" href="/static/style1.css">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
   <header>
-    <h1>KMRL — Induction Dashboard</h1>
-    <button onclick="loadAll()">Load Data</button>
+    <div class="header-content">
+      <h1><img src="/static/logo.jpg" alt="Logo" class="header-logo"><i class="fa-solid fa-train-subway"></i> KMRL Induction Dashboard</h1>
+      <div class="header-controls">
+        <button onclick="loadAll()"><i class="fa-solid fa-arrows-rotate"></i> Refresh All</button>
+        <label class="theme-switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
   </header>
 
   <main>
-    <section>
-      <h2>Rule-based Status</h2>
-      <div id="rules">Waiting...</div>
+    <section class="card">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-check-circle"></i> Rule-based Status</h2>
+      </div>
+      <div class="card-body" id="rules"></div>
     </section>
 
-    <section>
-      <h2>Optimized Induction</h2>
-      <label for="kOpt">Number of trains:</label>
-      <input id="kOpt" type="number" value="3" min="1">
-      <button onclick="loadOptimization()">Optimize</button>
-      <div id="opt">Waiting...</div>
+    <section class="card">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-cogs"></i> Optimized Induction</h2>
+        <div class="controls">
+          <label for="kOpt">Trains:</label>
+          <input id="kOpt" type="number" value="3" min="1">
+          <button onclick="loadOptimization()">Optimize</button>
+        </div>
+      </div>
+      <div class="card-body" id="opt"></div>
     </section>
 
-    <section>
-      <h2>Predictive Maintenance</h2>
-      <div id="pred">Waiting...</div>
+    <section class="card">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-chart-line"></i> Predictive Maintenance</h2>
+      </div>
+      <div class="card-body" id="pred"></div>
     </section>
 
-    <section>
-      <h2>What-If Simulator</h2>
-      <div class="whatif-field">
-        <label for="wf_k">Number of trains</label>
-        <input id="wf_k" type="number" value="3" min="1">
+    <section class="card">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-lightbulb"></i> What-If Simulator</h2>
       </div>
-      <div class="whatif-field">
-        <label for="wf_brand">Branding weight</label>
-        <input id="wf_brand" type="number" value="2000" min="0">
+      <div class="card-body">
+        <div class="whatif-field">
+          <label for="wf_k"><i class="fa-solid fa-train"></i> Number of trains</label>
+          <input id="wf_k" type="number" value="3" min="1">
+        </div>
+        <div class="whatif-field">
+          <label for="wf_brand"><i class="fa-solid fa-tags"></i> Branding weight</label>
+          <input id="wf_brand" type="number" value="2000" min="0">
+        </div>
+        <div class="whatif-field">
+          <label for="wf_stab"><i class="fa-solid fa-warehouse"></i> Stabling weight</label>
+          <input id="wf_stab" type="number" value="5" min="0">
+        </div>
+        <button class="block-button" onclick="runWhatIf()">Run Simulation</button>
+        <div id="whatif" class="whatif-results"></div>
       </div>
-      <div class="whatif-field">
-        <label for="wf_stab">Stabling weight</label>
-        <input id="wf_stab" type="number" value="5" min="0">
-      </div>
-      <button onclick="runWhatIf()">Run</button>
-      <div id="whatif">Waiting...</div>
     </section>
   </main>
 
-  <!-- JS path updated for static folder -->
+  <footer>
+    <p>&copy; 2025 KMRL Analytics Dashboard</p>
+  </footer>
+
   <script src="/static/app.js"></script>
 </body>
 
